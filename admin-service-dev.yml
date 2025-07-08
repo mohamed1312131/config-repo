@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: admin-service
+
+server:
+  port: 8081
+
+custom:
+  message: Hello from config server!
