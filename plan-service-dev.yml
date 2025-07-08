@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: plan-service
+
+server:
+  port: 8082
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
