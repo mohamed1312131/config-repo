@@ -7,8 +7,6 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/userdb
-  profiles:
-    active: default
 
 eureka:
   client:
@@ -16,21 +14,5 @@ eureka:
       defaultZone: http://localhost:8761/eureka
   instance:
     prefer-ip-address: true
+    hostname: localhost
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health, info, metrics
-  endpoint:
-    health:
-      show-details: always
-
-logging:
-  level:
-    com.netflix.eureka: DEBUG
-    com.netflix.discovery: DEBUG
-    root: INFO
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
