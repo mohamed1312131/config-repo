@@ -4,15 +4,9 @@ server:
 spring:
   application:
     name: Pack-Service
-  datasource:
-    url: jdbc:h2:mem:packdb
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/packs
 
 eureka:
   client:
