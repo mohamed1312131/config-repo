@@ -1,24 +1,23 @@
+server:
+  port: 8083
+
 spring:
   application:
     name: user-service
   data:
     mongodb:
-      uri: mongodb://mongo:27017/userdb
+      uri: mongodb://localhost:27017/userdb
   profiles:
     active: default
-
-server:
-  port: 8081
 
 eureka:
   client:
     service-url:
-      defaultZone: http://discovery-service:8761/eureka
+      defaultZone: http://localhost:8761/eureka
   instance:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
-# Management endpoints for monitoring
 management:
   endpoints:
     web:
@@ -28,7 +27,6 @@ management:
     health:
       show-details: always
 
-# Logging configuration
 logging:
   level:
     com.netflix.eureka: DEBUG
