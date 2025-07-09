@@ -1,6 +1,7 @@
 spring:
   application:
     name: api-gateway
+
   cloud:
     gateway:
       discovery:
@@ -8,18 +9,20 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-        - id: user-service
-          uri: lb://user-service
+        - id: pack-service
+          uri: lb://pack-service
           predicates:
-            - Path=/api/users/**
+            - Path=/api/packs/**
           filters:
-            - RewritePath=/api/users/(?<segment>.*), /${segment}
-        - id: plan-service
-          uri: lb://plan-service
+            - RewritePath=/api/packs/(?<segment>.*), /${segment}
+
+        - id: appointment-service
+          uri: lb://appointment-service
           predicates:
-            - Path=/api/plans/**
+            - Path=/api/appointments/**
           filters:
-            - RewritePath=/api/plans/(?<segment>.*), /${segment}
+            - RewritePath=/api/appointments/(?<segment>.*), /${segment}
+
       globalcors:
         corsConfigurations:
           '[/**]':
@@ -32,6 +35,7 @@ spring:
               - OPTIONS
             allowedHeaders: "*"
             allowCredentials: false
+
   profiles:
     active: default
 
@@ -46,7 +50,6 @@ eureka:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
-# Management endpoints for monitoring
 management:
   endpoints:
     web:
@@ -58,12 +61,11 @@ management:
     gateway:
       enabled: true
 
-# Logging configuration
 logging:
   level:
-    com.netflix.eureka: DEBUG
-    com.netflix.discovery: DEBUG
-    org.springframework.cloud.gateway: DEBUG
     root: INFO
+    org.springframework.cloud.gateway: DEBUG
+    com.netflix.discovery: DEBUG
+    com.netflix.eureka: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
