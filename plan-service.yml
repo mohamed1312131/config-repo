@@ -1,29 +1,28 @@
+server:
+  port: 8084
+
 spring:
   application:
     name: plan-service
   data:
     mongodb:
-      uri: mongodb://mongo:27017/plandb
+      uri: mongodb://localhost:27017/plandb
   rabbitmq:
-    host: rabbitmq
+    host: localhost
     port: 5672
     username: guest
     password: guest
   profiles:
     active: default
 
-server:
-  port: 8082
-
 eureka:
   client:
     service-url:
-      defaultZone: http://discovery-service:8761/eureka
+      defaultZone: http://localhost:8761/eureka
   instance:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
-# Circuit breaker configuration
 resilience4j:
   circuitbreaker:
     instances:
@@ -48,7 +47,6 @@ resilience4j:
       userService:
         timeoutDuration: 3s
 
-# Management endpoints for monitoring
 management:
   endpoints:
     web:
@@ -61,7 +59,6 @@ management:
     circuitbreakers:
       enabled: true
 
-# Logging configuration
 logging:
   level:
     com.netflix.eureka: DEBUG
