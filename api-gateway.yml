@@ -8,6 +8,7 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
+
       routes:
         - id: pack-service
           uri: lb://pack-service
@@ -22,6 +23,20 @@ spring:
             - Path=/api/appointments/**
           filters:
             - RewritePath=/api/appointments/(?<segment>.*), /${segment}
+
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/users/**
+          filters:
+            - RewritePath=/api/users/(?<segment>.*), /${segment}
+
+        - id: plan-service
+          uri: lb://plan-service
+          predicates:
+            - Path=/api/plans/**
+          filters:
+            - RewritePath=/api/plans/(?<segment>.*), /${segment}
 
       globalcors:
         corsConfigurations:
