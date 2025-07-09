@@ -4,52 +4,54 @@ spring:
 
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
 
-      routes:
-        - id: pack-service
-          uri: lb://pack-service
-          predicates:
-            - Path=/api/packs/**
-          filters:
-            - RewritePath=/api/packs/(?<segment>.*), /${segment}
+          routes:
+            - id: pack-service
+              uri: lb://pack-service
+              predicates:
+                - Path=/api/packs/**
+              filters:
+                - RewritePath=/api/packs/(?<segment>.*), /${segment}
 
-        - id: appointment-service
-          uri: lb://appointment-service
-          predicates:
-            - Path=/api/appointments/**
-          filters:
-            - RewritePath=/api/appointments/(?<segment>.*), /${segment}
+            - id: appointment-service
+              uri: lb://appointment-service
+              predicates:
+                - Path=/api/appointments/**
+              filters:
+                - RewritePath=/api/appointments/(?<segment>.*), /${segment}
 
-        - id: user-service
-          uri: lb://user-service
-          predicates:
-            - Path=/api/users/**
-          filters:
-            - RewritePath=/api/users/(?<segment>.*), /${segment}
+            - id: user-service
+              uri: lb://user-service
+              predicates:
+                - Path=/api/users/**
+              filters:
+                - RewritePath=/api/users/(?<segment>.*), /${segment}
 
-        - id: plan-service
-          uri: lb://plan-service
-          predicates:
-            - Path=/api/plans/**
-          filters:
-            - RewritePath=/api/plans/(?<segment>.*), /${segment}
+            - id: plan-service
+              uri: lb://plan-service
+              predicates:
+                - Path=/api/plans/**
+              filters:
+                - RewritePath=/api/plans/(?<segment>.*), /${segment}
 
-      globalcors:
-        corsConfigurations:
-          '[/**]':
-            allowedOrigins: "*"
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - OPTIONS
-            allowedHeaders: "*"
-            allowCredentials: false
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allowed-origins: "*"
+                allowed-methods:
+                  - GET
+                  - POST
+                  - PUT
+                  - DELETE
+                  - OPTIONS
+                allowed-headers: "*"
+                allow-credentials: false
 
   profiles:
     active: default
@@ -70,17 +72,3 @@ management:
     web:
       exposure:
         include: health, info, metrics, gateway
-  endpoint:
-    health:
-      show-details: always
-    gateway:
-      enabled: true
-
-logging:
-  level:
-    root: INFO
-    org.springframework.cloud.gateway: DEBUG
-    com.netflix.discovery: DEBUG
-    com.netflix.eureka: DEBUG
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
