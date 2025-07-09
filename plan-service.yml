@@ -17,3 +17,21 @@ eureka:
   instance:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      userService:
+        registerHealthIndicator: true
+        slidingWindowSize: 10              # Number of calls to evaluate
+        minimumNumberOfCalls: 5            # Start evaluating after 5 calls
+        failureRateThreshold: 50           # % of failed calls to trip the breaker
+        waitDurationInOpenState: 10s       # Stay OPEN for 10s before retrying
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: resilience4j.circuitbreakers, health, info
