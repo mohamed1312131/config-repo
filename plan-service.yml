@@ -1,5 +1,5 @@
 server:
-  port: 8084
+  port: 8083
 
 spring:
   application:
@@ -7,13 +7,11 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/plandb
-  rabbitmq:
+    rabbitmq:
     host: localhost
     port: 5672
     username: guest
     password: guest
-  profiles:
-    active: default
 
 eureka:
   client:
@@ -21,49 +19,5 @@ eureka:
       defaultZone: http://localhost:8761/eureka
   instance:
     prefer-ip-address: true
+    hostname: localhost
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-
-resilience4j:
-  circuitbreaker:
-    instances:
-      userService:
-        registerHealthIndicator: true
-        slidingWindowSize: 10
-        minimumNumberOfCalls: 5
-        failureRateThreshold: 50
-        waitDurationInOpenState: 10s
-        permittedNumberOfCallsInHalfOpenState: 3
-        automaticTransitionFromOpenToHalfOpenEnabled: true
-        slidingWindowType: COUNT_BASED
-  retry:
-    instances:
-      userService:
-        maxAttempts: 3
-        waitDuration: 1s
-        enableExponentialBackoff: true
-        exponentialBackoffMultiplier: 2
-  timelimiter:
-    instances:
-      userService:
-        timeoutDuration: 3s
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health, info, metrics, resilience4j.circuitbreakers, resilience4j.retries
-  endpoint:
-    health:
-      show-details: always
-  health:
-    circuitbreakers:
-      enabled: true
-
-logging:
-  level:
-    com.netflix.eureka: DEBUG
-    com.netflix.discovery: DEBUG
-    io.github.resilience4j: DEBUG
-    root: INFO
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
