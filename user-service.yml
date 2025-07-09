@@ -4,10 +4,6 @@ server:
 spring:
   application:
     name: user-service
-  profiles:
-    active: default
-  config:
-    import: configserver:http://config-server:8888
   data:
     mongodb:
       uri: mongodb://mongo:27017/userdb
@@ -18,4 +14,5 @@ eureka:
       defaultZone: http://discovery-service:8761/eureka
   instance:
     prefer-ip-address: true
+    hostname: localhost
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
