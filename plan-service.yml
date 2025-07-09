@@ -4,14 +4,13 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://localhost:27017/plandb
+      uri: mongodb://mongo:27017/plandb
   
   rabbitmq:
-    host: localhost
+    host: rabbitmq
     port: 5672
     username: guest
     password: guest
-
 
 server:
   port: 8082
@@ -19,7 +18,7 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://discovery-service:8761/eureka
 
   instance:
     prefer-ip-address: true
@@ -30,10 +29,10 @@ resilience4j:
     instances:
       userService:
         registerHealthIndicator: true
-        slidingWindowSize: 10              # Number of calls to evaluate
-        minimumNumberOfCalls: 5            # Start evaluating after 5 calls
-        failureRateThreshold: 50           # % of failed calls to trip the breaker
-        waitDurationInOpenState: 10s       # Stay OPEN for 10s before retrying
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
         permittedNumberOfCallsInHalfOpenState: 3
         automaticTransitionFromOpenToHalfOpenEnabled: true
 
